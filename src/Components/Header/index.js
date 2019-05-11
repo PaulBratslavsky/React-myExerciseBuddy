@@ -11,7 +11,7 @@ const Header = (props) => {
       </div>
 
       <div className="main-header__menu">
-        <button onClick={props.showMenu}>Menu</button>
+        <i onClick={props.showMenu}class="fas fa-bars"></i>
       </div>
     </header>
   )

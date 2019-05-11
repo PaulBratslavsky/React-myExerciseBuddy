@@ -12,9 +12,9 @@ class Home extends Component {
 
     myDatabase.collection('exercise').get().then( (snapshot) => {
       snapshot.docs.forEach( item => {
-        console.log(item.id, 'WTFIT');
-        
+
         let myObject = item.data();
+        
         // Add unique id to my object
         myObject.id = item.id;
 
@@ -30,7 +30,7 @@ class Home extends Component {
   render() {
 
     let videoInfo = this.state.exercise;
-    
+
     return (
       <div className="video-list__items">
         { 

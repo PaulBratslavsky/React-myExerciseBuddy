@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // CSS
 import './menu.css';
@@ -7,7 +8,10 @@ const Menu = (props) => {
     <div className="modal" onClick={props.showMenu}>
       <nav className="main-nav">
         <ul>
-          <li>hello</li>
+          <li><Link to="/">HOME</Link></li>
+          <li><Link to="/add-exercise">ADD EXERCISE</Link></li>
+          <li><Link to="/my-favorites">FAVORITES</Link></li>
+          <li><Link to="/my-routnes">MY ROUTINES</Link></li>
         </ul>
       </nav>
     </div>

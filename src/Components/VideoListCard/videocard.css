@@ -1,0 +1,45 @@
+.video-list__item {
+  border-bottom: #222831 5px solid;
+  background: #eee;
+
+}
+
+.title-button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1rem 1rem 0.5rem 1rem;
+}
+
+.video-title h1 {
+  background: #d65a31;
+  color: #eee;
+  padding: 0.25rem 0.75rem;
+}
+
+.video-buttons i {
+  margin-left: 1rem;
+  font-size: 2rem;
+  color: #222831;
+}
+
+.video-buttons i:hover, 
+.video-buttons i:focus {
+  color: #d65a31;
+}
+
+.video-buttons .fas.fa-heart {
+  color: #d65a31;
+}
+
+.video-description p {
+  margin: 0.5rem 1rem 1rem 1rem;
+  line-height: 1.4;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  color: #222831;
+  
+}
+
+

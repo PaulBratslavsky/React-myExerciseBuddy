@@ -1,4 +1,5 @@
 import React from 'react';
+import './showvideo.css';
 
 // IMPORT HELPER FUNCTION 
 import { getVideoId } from '../../_Functions/getVideoId';
@@ -6,7 +7,7 @@ import { getVideoId } from '../../_Functions/getVideoId';
 
 const ShowVideo =  (props) => {
   return(
-    <div className="videoWrapper">
+    <div className="video-wrapper">
       <iframe 
         width="560" 
         height="315" 

@@ -1,12 +1,16 @@
 .main-header {
-  background: #db0e0e;
+  background: #222831;
   color: #eee;
+
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 50px;
+  height: 65px;
+
   overflow: hidden;
+
+  z-index: 200;
 
   display: flex;
   justify-content: space-between;
@@ -18,4 +22,12 @@
 
 .main-header h1 {
   font-size: 1.4rem;
+}
+
+.main-header__menu i {
+  font-size: 2rem;
+}
+
+.main-header__menu i:hover {
+  color: #d65a31;
 }
