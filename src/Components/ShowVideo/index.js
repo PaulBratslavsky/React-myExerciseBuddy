@@ -8,7 +8,8 @@ import { getVideoId } from '../../_Functions/getVideoId';
 const ShowVideo =  (props) => {
   return(
     <div className="video-wrapper">
-      <iframe 
+      <iframe
+        title={props.item.videoTitle}
         width="560" 
         height="315" 
         src={`https://www.youtube.com/embed/${getVideoId(props.item.videoUrl)}`} 

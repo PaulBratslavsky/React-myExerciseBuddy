@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
+
+// GET FIREBASE DATA
 import { myDatabase } from '../../firebase';
+
+// IMPORT COMPONENTS
 import VideoListCard from '../VideoListCard';
 
 class Home extends Component {
   
   state = {
-    exercise: []
+    exercise: [],
+    routines: [],
+    currentRoutineItems: ['test']
   }
 
   componentDidMount() {
@@ -25,8 +31,25 @@ class Home extends Component {
         });
       });
 
-  });
+    });
+    
   }
+
+  addVideoToRoutine = (videoId, routineId) => {
+    console.log(`Video with id ${videoId} and routine of ${routineId}`);
+
+    this.setState( (prevState) => {
+      return {
+        currentRoutineItems: [...prevState.currentRoutineItems, videoId]
+      }
+    });
+    
+    myDatabase.collection('routine').doc(routineId).update( { routineItems: [...this.state.currentRoutineItems] } )
+      .then( () => console.log('Data Updated'))
+      .catch( (e) => console.log(e, 'Data update failed') );
+
+  }
+
   render() {
 
     let videoInfo = this.state.exercise;
@@ -34,9 +57,13 @@ class Home extends Component {
     return (
       <div className="video-list__items">
         { 
-          videoInfo.map( item => {
+          videoInfo.map( (exercise) => {
             return(
-              <VideoListCard key={item.id} item={item}/>
+              <VideoListCard 
+                key={exercise.id} 
+                exercise={exercise} 
+                addVideoToRoutine={this.addVideoToRoutine}
+              />
             );
           }) 
         }
