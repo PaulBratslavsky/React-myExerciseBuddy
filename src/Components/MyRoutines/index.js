@@ -60,10 +60,10 @@ class MyRoutines extends Component {
       <div className="video-list__items">
           <AddNewRoutine />
           {
-            routines.map( (routine) => {
+            routines.map( (routine, index) => {
 
               return(
-                <SingleRoutine routine={routine}/>
+                <SingleRoutine key={index} routine={routine}/>
               );
             })
           }

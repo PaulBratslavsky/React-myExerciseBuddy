@@ -21,7 +21,6 @@ class VideoListCard extends Component {
     this.setState( prevState => {
       return { showVideo: !prevState.showVideo }
     });  
-    console.log('Show video clicked');
   }
 
   likeVideo = (videoId) => {
@@ -34,7 +33,7 @@ class VideoListCard extends Component {
       .then( () => console.log('Data Updated'))
       .catch( (e) => console.log(e, 'Data update failed') );
 
-      console.log('video liked');
+      // console.log('video liked');
 
     } else if ( this.state.videoLiked === true ){
       this.setState({
@@ -45,7 +44,7 @@ class VideoListCard extends Component {
       .then( () => console.log('Data Updated'))
       .catch( (e) => console.log(e, 'Data update failed') );
 
-      console.log('video unliked');
+      // console.log('video unliked');
     }
   }
 
@@ -73,7 +72,7 @@ class VideoListCard extends Component {
           </div>
 
           <div className="video-buttons">
-            <i onClick={() => { this.props.showAvailableRoutines(this.props.exercise.videoTitle) } }className="add-to-routine far fa-plus-square"></i>
+            <i onClick={() => { this.props.showAvailableRoutines(); this.props.setSelectedExerciseToState(this.props.exercise.videoTitle); } }className="add-to-routine far fa-plus-square"></i>
             <i onClick={this.showVideo} className="play-video fas fa-video"></i>
             <i onClick={() => { this.likeVideo(this.props.exercise.id) } } className={`add-to-workout ${videoLiked(this.state.videoLiked)}`}></i>
             <i className="delete-video far fa-trash-alt"></i>

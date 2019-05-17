@@ -26,7 +26,6 @@ class SingleRoutine extends Component {
           <ul className="exercise-list">
             {
               routine.routineItems.map( (exercise, index) => {
-                console.log(exercise);
                 return(
                   <li key={index}>{`${index + 1} ${exercise}`}</li>
                 );
