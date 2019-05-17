@@ -21,7 +21,6 @@ class VideoListCard extends Component {
     this.setState( prevState => {
       return { showVideo: !prevState.showVideo }
     });  
-    console.log('Show video clicked');
   }
 
   likeVideo = (videoId) => {
@@ -34,7 +33,7 @@ class VideoListCard extends Component {
       .then( () => console.log('Data Updated'))
       .catch( (e) => console.log(e, 'Data update failed') );
 
-      console.log('video liked');
+      // console.log('video liked');
 
     } else if ( this.state.videoLiked === true ){
       this.setState({
@@ -45,7 +44,7 @@ class VideoListCard extends Component {
       .then( () => console.log('Data Updated'))
       .catch( (e) => console.log(e, 'Data update failed') );
 
-      console.log('video unliked');
+      // console.log('video unliked');
     }
   }
 

@@ -62,7 +62,6 @@ class Home extends Component {
   }
 
   showAvailableRoutines = (videoId) => {
-    console.log(`show available routine fired with video ${videoId}`);
     this.setState({
       showAvailableRoutines: true,
       selectedVideo: videoId
@@ -74,11 +73,10 @@ class Home extends Component {
   selectRoutineToAddTo = (routineId) => {
     const videoId = this.state.selectedVideo
 
-    this.state.routines.map( item => {
+    this.state.routines.forEach( item => {
       if ( item.id === routineId ) {
 
         let myArray = [ ...item.routineItems, videoId ]
-        console.log(`Video with id ${videoId} will be added to routine of ${routineId} with ${myArray}`);
   
         myDatabase.collection('routine').doc(routineId).update( { routineItems: myArray } )
         .then( () => console.log('Data Updated'))
@@ -127,9 +125,9 @@ class Home extends Component {
           <div>
           <h2>Show Routine</h2>
             {
-              routines.map( routine => {
+              routines.map( (routine, index) => {
                 return(
-                  <div onClick={ () => this.selectRoutineToAddTo(routine.id) }>{routine.routineName}</div>
+                  <div onClick={ () => this.selectRoutineToAddTo(routine.id) } key={index}>{routine.routineName}</div>
                 );
               })
             }
