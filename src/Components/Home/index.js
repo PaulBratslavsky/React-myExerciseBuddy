@@ -5,6 +5,7 @@ import { myDatabase } from '../../firebase';
 
 // IMPORT COMPONENTS
 import VideoListCard from '../VideoListCard';
+import GetRoutinesList from '../GetRoutinesList';
 
 class Home extends Component {
   
@@ -12,7 +13,7 @@ class Home extends Component {
     exercise: [],
     routines: [],
     showAvailableRoutines: false,
-    selectedVideo: ''
+    selectedExercise: ''
   }
 
   componentDidMount() {
@@ -33,24 +34,6 @@ class Home extends Component {
       });
 
     });
-
-    // GET ROUTINES
-    myDatabase.collection('routine').get().then( (snapshot) => {
-      snapshot.docs.forEach( item => {
-
-        let myObject = item.data();
-        
-        // Add unique id to my object
-        myObject.id = item.id;
-
-        this.setState( prevState => {
-          return({
-            routines: [...prevState.routines, myObject ]
-          });
-        });
-      });
-
-    });
     
   }
 
@@ -61,11 +44,59 @@ class Home extends Component {
     });
   }
 
-  showAvailableRoutines = (videoId) => {
+  showAvailableRoutines = () => {
     this.setState({
       showAvailableRoutines: true,
-      selectedVideo: videoId
     });
+  }
+
+  setSelectedExerciseToState = (selectedExercise) => {
+    this.setState({
+      selectedExercise: selectedExercise,
+    });
+  }
+
+  render() {
+
+    let videoInfo = this.state.exercise;
+
+    return (
+      <div className="video-list__items">
+      
+        { 
+          videoInfo.map( (exercise) => {
+            return(
+              <VideoListCard 
+                key={exercise.id} 
+                exercise={exercise} 
+                showAvailableRoutines={this.showAvailableRoutines}
+                setSelectedExerciseToState={this.setSelectedExerciseToState}
+              />
+            );
+          }) 
+        }
+        { 
+          this.state.showAvailableRoutines && 
+          <GetRoutinesList 
+            hideAvailableRoutines={this.hideAvailableRoutines}                 
+            selectedExercise={this.state.selectedExercise}
+          /> 
+        }
+        
+        
+      </div>
+    )
+  }
+}
+  
+
+export default Home;
+
+ /*
+  getSelectedVideo = (videoId) => {
+    this.setState({
+      selectedVideo: videoId
+    })
   }
 
   
@@ -88,62 +119,4 @@ class Home extends Component {
     this.hideAvailableRoutines();
   }
 
-
-
-  render() {
-    let videoInfo = this.state.exercise;
-    let routines = this.state.routines;
-
-    return (
-      <div className="video-list__items">
-      
-        { 
-          videoInfo.map( (exercise) => {
-            return(
-              <VideoListCard 
-                key={exercise.id} 
-                exercise={exercise} 
-                showAvailableRoutines={this.showAvailableRoutines}
-              />
-            );
-          }) 
-        }
-        {
-          this.state.showAvailableRoutines && 
-          
-          <div style={{
-          background: 'rgb(34, 40, 49, 0.9)',
-          width: '100vw',
-          height: '100vh',
-          position: 'fixed',
-          top: '0',
-          left: '0',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-          <div>
-          <h2>Show Routine</h2>
-            {
-              routines.map( (routine, index) => {
-                return(
-                  <div onClick={ () => this.selectRoutineToAddTo(routine.id) } key={index}>{routine.routineName}</div>
-                );
-              })
-            }
-            <button onClick={this.hideAvailableRoutines}>X</button>
-
-            </div>
-        </div>
-
-        }
-        
-        
-      </div>
-    )
-  }
-}
-  
-
-export default Home;
-
+  */
