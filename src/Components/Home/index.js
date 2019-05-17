@@ -5,6 +5,7 @@ import { myDatabase } from '../../firebase';
 
 // IMPORT COMPONENTS
 import VideoListCard from '../VideoListCard';
+import ShowAllRoutines from '../ShowAllRoutines';
 
 class Home extends Component {
   
@@ -17,11 +18,19 @@ class Home extends Component {
 
   componentDidMount() {
 
+    this.getExerciseFromDatabase();
+    this.getRoutinesFromDatabase();
+
+    
+  }
+
+  getExerciseFromDatabase = () => {
+    // GET EXERCISE
     myDatabase.collection('exercise').get().then( (snapshot) => {
       snapshot.docs.forEach( item => {
 
         let myObject = item.data();
-        
+        console.log(myObject, 'From get exercise from database');
         // Add unique id to my object
         myObject.id = item.id;
 
@@ -33,7 +42,9 @@ class Home extends Component {
       });
 
     });
+  }
 
+  getRoutinesFromDatabase = () => {
     // GET ROUTINES
     myDatabase.collection('routine').get().then( (snapshot) => {
       snapshot.docs.forEach( item => {
@@ -42,7 +53,7 @@ class Home extends Component {
         
         // Add unique id to my object
         myObject.id = item.id;
-
+  
         this.setState( prevState => {
           return({
             routines: [...prevState.routines, myObject ]
@@ -51,9 +62,19 @@ class Home extends Component {
       });
 
     });
-    
   }
 
+  deleteVideo = (videoId) => {
+    console.log(`delete button clicked.  Video with Id ${videoId} will be deleted`);
+
+    myDatabase.collection('exercise').doc(videoId).delete()
+    .then( () => { 
+      console.log('Data Deleted');
+      this.getExerciseFromDatabase();
+     } )
+    .catch( (e) => console.log(e, 'Data delete failed') );
+  
+  }
   
   hideAvailableRoutines = () => {
     this.setState({
@@ -92,7 +113,6 @@ class Home extends Component {
 
   render() {
     let videoInfo = this.state.exercise;
-    let routines = this.state.routines;
 
     return (
       <div className="video-list__items">
@@ -104,40 +124,20 @@ class Home extends Component {
                 key={exercise.id} 
                 exercise={exercise} 
                 showAvailableRoutines={this.showAvailableRoutines}
+                deleteVideo={this.deleteVideo}
               />
             );
           }) 
         }
+
         {
           this.state.showAvailableRoutines && 
-          
-          <div style={{
-          background: 'rgb(34, 40, 49, 0.9)',
-          width: '100vw',
-          height: '100vh',
-          position: 'fixed',
-          top: '0',
-          left: '0',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-          <div>
-          <h2>Show Routine</h2>
-            {
-              routines.map( (routine, index) => {
-                return(
-                  <div onClick={ () => this.selectRoutineToAddTo(routine.id) } key={index}>{routine.routineName}</div>
-                );
-              })
-            }
-            <button onClick={this.hideAvailableRoutines}>X</button>
-
-            </div>
-        </div>
-
+          <ShowAllRoutines 
+            selectRoutineToAddTo={this.selectRoutineToAddTo}
+            hideAvailableRoutines={this.hideAvailableRoutines}
+            routines={this.state.routines}  
+          />
         }
-        
         
       </div>
     )

@@ -22,7 +22,15 @@ class VideoListCard extends Component {
       return { showVideo: !prevState.showVideo }
     });  
   }
+/*
+  deleteVideo = (videoId) => {
+    console.log(`delete button clicked.  Video with Id ${videoId} will be deleted`);
 
+    myDatabase.collection('exercise').doc(videoId).delete()
+    .then( () => console.log('Data Deleted'))
+    .catch( (e) => console.log(e, 'Data delete failed') );
+  }
+*/
   likeVideo = (videoId) => {
     if ( this.state.videoLiked === false ) {
       this.setState({
@@ -75,7 +83,7 @@ class VideoListCard extends Component {
             <i onClick={() => { this.props.showAvailableRoutines(this.props.exercise.videoTitle) } }className="add-to-routine far fa-plus-square"></i>
             <i onClick={this.showVideo} className="play-video fas fa-video"></i>
             <i onClick={() => { this.likeVideo(this.props.exercise.id) } } className={`add-to-workout ${videoLiked(this.state.videoLiked)}`}></i>
-            <i className="delete-video far fa-trash-alt"></i>
+            <i onClick={() => { this.props.deleteVideo(this.props.exercise.id) }} className="delete-video far fa-trash-alt"></i>
           </div>
         </div>
 
