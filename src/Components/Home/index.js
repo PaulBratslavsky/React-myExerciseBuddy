@@ -11,7 +11,8 @@ class Home extends Component {
   state = {
     exercise: [],
     routines: [],
-    currentRoutineItems: ['test']
+    showAvailableRoutines: false,
+    selectedVideo: ''
   }
 
   componentDidMount() {
@@ -32,41 +33,114 @@ class Home extends Component {
       });
 
     });
-    
-  }
 
-  addVideoToRoutine = (videoId, routineId) => {
-    console.log(`Video with id ${videoId} and routine of ${routineId}`);
+    // GET ROUTINES
+    myDatabase.collection('routine').get().then( (snapshot) => {
+      snapshot.docs.forEach( item => {
 
-    this.setState( (prevState) => {
-      return {
-        currentRoutineItems: [...prevState.currentRoutineItems, videoId]
-      }
+        let myObject = item.data();
+        
+        // Add unique id to my object
+        myObject.id = item.id;
+
+        this.setState( prevState => {
+          return({
+            routines: [...prevState.routines, myObject ]
+          });
+        });
+      });
+
     });
     
-    myDatabase.collection('routine').doc(routineId).update( { routineItems: [...this.state.currentRoutineItems] } )
-      .then( () => console.log('Data Updated'))
-      .catch( (e) => console.log(e, 'Data update failed') );
-
   }
 
-  render() {
+  
+  hideAvailableRoutines = () => {
+    this.setState({
+      showAvailableRoutines: false
+    });
+  }
 
+  showAvailableRoutines = (videoId) => {
+    console.log(`show available routine fired with video ${videoId}`);
+    this.setState({
+      showAvailableRoutines: true,
+      selectedVideo: videoId
+    });
+  }
+
+  
+
+  selectRoutineToAddTo = (routineId) => {
+    const videoId = this.state.selectedVideo
+
+    this.state.routines.map( item => {
+      if ( item.id === routineId ) {
+
+        let myArray = [ ...item.routineItems, videoId ]
+        console.log(`Video with id ${videoId} will be added to routine of ${routineId} with ${myArray}`);
+  
+        myDatabase.collection('routine').doc(routineId).update( { routineItems: myArray } )
+        .then( () => console.log('Data Updated'))
+        .catch( (e) => console.log(e, 'Data update failed') );
+        }
+
+    });
+    
+    this.hideAvailableRoutines();
+  }
+
+
+
+  render() {
     let videoInfo = this.state.exercise;
+    let routines = this.state.routines;
 
     return (
       <div className="video-list__items">
+      
         { 
           videoInfo.map( (exercise) => {
             return(
               <VideoListCard 
                 key={exercise.id} 
                 exercise={exercise} 
-                addVideoToRoutine={this.addVideoToRoutine}
+                showAvailableRoutines={this.showAvailableRoutines}
               />
             );
           }) 
         }
+        {
+          this.state.showAvailableRoutines && 
+          
+          <div style={{
+          background: 'rgb(34, 40, 49, 0.9)',
+          width: '100vw',
+          height: '100vh',
+          position: 'fixed',
+          top: '0',
+          left: '0',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <div>
+          <h2>Show Routine</h2>
+            {
+              routines.map( routine => {
+                return(
+                  <div onClick={ () => this.selectRoutineToAddTo(routine.id) }>{routine.routineName}</div>
+                );
+              })
+            }
+            <button onClick={this.hideAvailableRoutines}>X</button>
+
+            </div>
+        </div>
+
+        }
+        
+        
       </div>
     )
   }

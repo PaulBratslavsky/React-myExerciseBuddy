@@ -5,7 +5,6 @@ class SingleRoutine extends Component {
 
   
   render() {
-    console.log(this.props.routine, 'from single routine');
     const routine = this.props.routine;
     return (
       <div className="single-routine__item">
@@ -16,7 +15,7 @@ class SingleRoutine extends Component {
 
           <div className="single-routine-buttons">
             <div>
-              <h2>test</h2>
+              <h2>X</h2>
             </div>
           </div>
         </header>

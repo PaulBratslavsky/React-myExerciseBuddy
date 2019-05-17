@@ -12,7 +12,7 @@ class Routes extends Component {
       <Layout>
         <Switch> 
           <Route path="/" exact component={Home} />
-          <Route path="/my-routnes" component={MyRoutines} />
+          <Route path="/my-routines" component={MyRoutines} />
         </Switch>
       </Layout>
     )

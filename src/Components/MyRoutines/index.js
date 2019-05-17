@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { myDatabase } from '../../firebase';
 import SingleRoutine from '../SingleRoutine';
+import AddNewRoutine from '../AddRoutine';
 
 
 class MyRoutines extends Component {
@@ -22,7 +23,6 @@ class MyRoutines extends Component {
         myObject.id = item.id;
 
         this.setState( prevState => {
-          console.log(myObject, 'helloooo');
           return({
             routines: [...prevState.routines, myObject ]
           });
@@ -53,11 +53,12 @@ class MyRoutines extends Component {
   render() {
 
     const routines = this.state.routines;
-    const exercises = this.state.exercise;
+    // const exercises = this.state.exercise;
     
 
     return (
       <div className="video-list__items">
+          <AddNewRoutine />
           {
             routines.map( (routine) => {
 

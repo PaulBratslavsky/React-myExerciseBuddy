@@ -12,7 +12,7 @@ class VideoListCard extends Component {
 
   state = {
     showVideo: false,
-    showAddRoutine: false,
+    showRoutineList: false,
     videoLiked: this.props.exercise.videoLiked,
     
   }
@@ -47,8 +47,6 @@ class VideoListCard extends Component {
 
       console.log('video unliked');
     }
-
-    console.log(`Video Added btn clicked for vidoe ${videoId}`);
   }
 
   render() {
@@ -75,7 +73,7 @@ class VideoListCard extends Component {
           </div>
 
           <div className="video-buttons">
-            <i onClick={() => { this.props.addVideoToRoutine(this.props.exercise.id, 'WEdMsckJumEzMzoFjnDh') } }className="add-to-routine far fa-plus-square"></i>
+            <i onClick={() => { this.props.showAvailableRoutines(this.props.exercise.videoTitle) } }className="add-to-routine far fa-plus-square"></i>
             <i onClick={this.showVideo} className="play-video fas fa-video"></i>
             <i onClick={() => { this.likeVideo(this.props.exercise.id) } } className={`add-to-workout ${videoLiked(this.state.videoLiked)}`}></i>
             <i className="delete-video far fa-trash-alt"></i>
