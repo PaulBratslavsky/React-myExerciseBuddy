@@ -13,7 +13,7 @@ class Home extends Component {
     exercise: [],
     routines: [],
     showAvailableRoutines: false,
-    selectedVideo: ''
+    selectedExercise: ''
   }
 
   componentDidMount() {
@@ -82,36 +82,21 @@ class Home extends Component {
     });
   }
 
-  showAvailableRoutines = (videoId) => {
+  showAvailableRoutines = () => {
     this.setState({
       showAvailableRoutines: true,
-      selectedVideo: videoId
     });
   }
 
-  
-
-  selectRoutineToAddTo = (routineId) => {
-    const videoId = this.state.selectedVideo
-
-    this.state.routines.forEach( item => {
-      if ( item.id === routineId ) {
-
-        let myArray = [ ...item.routineItems, videoId ]
-  
-        myDatabase.collection('routine').doc(routineId).update( { routineItems: myArray } )
-        .then( () => console.log('Data Updated'))
-        .catch( (e) => console.log(e, 'Data update failed') );
-        }
-
+  setSelectedExerciseToState = (selectedExercise) => {
+    this.setState({
+      selectedExercise: selectedExercise,
     });
-    
-    this.hideAvailableRoutines();
   }
-
-
+  
 
   render() {
+
     let videoInfo = this.state.exercise;
 
     return (
@@ -125,6 +110,7 @@ class Home extends Component {
                 exercise={exercise} 
                 showAvailableRoutines={this.showAvailableRoutines}
                 deleteVideo={this.deleteVideo}
+                setSelectedExerciseToState={this.setSelectedExerciseToState}
               />
             );
           }) 
@@ -147,3 +133,31 @@ class Home extends Component {
 
 export default Home;
 
+ /*
+  getSelectedVideo = (videoId) => {
+    this.setState({
+      selectedVideo: videoId
+    })
+  }
+
+  
+
+  selectRoutineToAddTo = (routineId) => {
+    const videoId = this.state.selectedVideo
+
+    this.state.routines.forEach( item => {
+      if ( item.id === routineId ) {
+
+        let myArray = [ ...item.routineItems, videoId ]
+  
+        myDatabase.collection('routine').doc(routineId).update( { routineItems: myArray } )
+        .then( () => console.log('Data Updated'))
+        .catch( (e) => console.log(e, 'Data update failed') );
+        }
+
+    });
+    
+    this.hideAvailableRoutines();
+  }
+
+  */
