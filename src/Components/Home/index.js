@@ -13,7 +13,7 @@ class Home extends Component {
     exercise: [],
     routines: [],
     showAvailableRoutines: false,
-    selectedExercise: ''
+    selectedVideo: ''
   }
 
   componentDidMount() {
@@ -82,62 +82,11 @@ class Home extends Component {
     });
   }
 
-  showAvailableRoutines = () => {
+  showAvailableRoutines = (videoId) => {
     this.setState({
       showAvailableRoutines: true,
-    });
-  }
-
-  setSelectedExerciseToState = (selectedExercise) => {
-    this.setState({
-      selectedExercise: selectedExercise,
-    });
-  }
-  
-
-  render() {
-
-    let videoInfo = this.state.exercise;
-
-    return (
-      <div className="video-list__items">
-      
-        { 
-          videoInfo.map( (exercise) => {
-            return(
-              <VideoListCard 
-                key={exercise.id} 
-                exercise={exercise} 
-                showAvailableRoutines={this.showAvailableRoutines}
-                deleteVideo={this.deleteVideo}
-                setSelectedExerciseToState={this.setSelectedExerciseToState}
-              />
-            );
-          }) 
-        }
-
-        {
-          this.state.showAvailableRoutines && 
-          <ShowAllRoutines 
-            selectRoutineToAddTo={this.selectRoutineToAddTo}
-            hideAvailableRoutines={this.hideAvailableRoutines}
-            routines={this.state.routines}  
-          />
-        }
-        
-      </div>
-    )
-  }
-}
-  
-
-export default Home;
-
- /*
-  getSelectedVideo = (videoId) => {
-    this.setState({
       selectedVideo: videoId
-    })
+    });
   }
 
   
@@ -160,4 +109,41 @@ export default Home;
     this.hideAvailableRoutines();
   }
 
-  */
+
+
+  render() {
+    let videoInfo = this.state.exercise;
+
+    return (
+      <div className="video-list__items">
+      
+        { 
+          videoInfo.map( (exercise) => {
+            return(
+              <VideoListCard 
+                key={exercise.id} 
+                exercise={exercise} 
+                showAvailableRoutines={this.showAvailableRoutines}
+                deleteVideo={this.deleteVideo}
+              />
+            );
+          }) 
+        }
+
+        {
+          this.state.showAvailableRoutines && 
+          <ShowAllRoutines 
+            selectRoutineToAddTo={this.selectRoutineToAddTo}
+            hideAvailableRoutines={this.hideAvailableRoutines}
+            routines={this.state.routines}  
+          />
+        }
+        
+      </div>
+    )
+  }
+}
+  
+
+export default Home;
+

@@ -80,7 +80,7 @@ class VideoListCard extends Component {
           </div>
 
           <div className="video-buttons">
-            <i onClick={() => { this.props.showAvailableRoutines(); this.props.setSelectedExerciseToState(this.props.exercise.videoTitle); } } className="add-to-routine far fa-plus-square"></i>
+            <i onClick={() => { this.props.showAvailableRoutines(this.props.exercise.videoTitle) } }className="add-to-routine far fa-plus-square"></i>
             <i onClick={this.showVideo} className="play-video fas fa-video"></i>
             <i onClick={() => { this.likeVideo(this.props.exercise.id) } } className={`add-to-workout ${videoLiked(this.state.videoLiked)}`}></i>
             <i onClick={() => { this.props.deleteVideo(this.props.exercise.id) }} className="delete-video far fa-trash-alt"></i>
