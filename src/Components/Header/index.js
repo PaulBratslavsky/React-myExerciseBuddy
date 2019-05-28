@@ -55,6 +55,13 @@ class Header extends Component {
         }
       );
 
+      // Does not rerender unless I reroute
+      let { history } = this.props;
+
+      history.push({
+        pathname: '/'
+      });
+
       console.log("Added document written with ID: ", docRef.id);
       this.handleCloseModal();
     })

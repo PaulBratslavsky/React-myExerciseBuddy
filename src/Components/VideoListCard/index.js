@@ -22,15 +22,7 @@ class VideoListCard extends Component {
       return { showVideo: !prevState.showVideo }
     });  
   }
-/*
-  deleteVideo = (videoId) => {
-    console.log(`delete button clicked.  Video with Id ${videoId} will be deleted`);
 
-    myDatabase.collection('exercise').doc(videoId).delete()
-    .then( () => console.log('Data Deleted'))
-    .catch( (e) => console.log(e, 'Data delete failed') );
-  }
-*/
   likeVideo = (videoId) => {
     if ( this.state.videoLiked === false ) {
       this.setState({
@@ -96,3 +88,14 @@ class VideoListCard extends Component {
 }
 
 export default VideoListCard;
+
+
+/*
+  deleteVideo = (videoId) => {
+    console.log(`delete button clicked.  Video with Id ${videoId} will be deleted`);
+
+    myDatabase.collection('exercise').doc(videoId).delete()
+    .then( () => console.log('Data Deleted'))
+    .catch( (e) => console.log(e, 'Data delete failed') );
+  }
+*/

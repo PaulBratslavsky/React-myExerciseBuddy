@@ -25,20 +25,23 @@ class Home extends Component {
   }
 
   getExerciseFromDatabase = () => {
-    // GET EXERCISE
-    myDatabase.collection('exercise').get().then( (snapshot) => {
-      snapshot.docs.forEach( item => {
+    // EMPTY ARRAY TO CONTAIN EXERCISE DATA
+    let exerciseVideos= [];
 
+    // GET EXERCISE FROM DATABASE
+    myDatabase.collection('exercise').get().then( (snapshot) => {
+      
+      // 
+      snapshot.docs.forEach( item => {
         let myObject = item.data();
-        console.log(myObject, 'From get exercise from database');
         // Add unique id to my object
         myObject.id = item.id;
+        
+        exerciseVideos = [ ...exerciseVideos,  myObject ];
+      });
 
-        this.setState( prevState => {
-          return({
-            exercise: [...prevState.exercise, myObject ]
-          });
-        });
+      this.setState({
+        exercise: exerciseVideos
       });
 
     });
@@ -66,11 +69,31 @@ class Home extends Component {
 
   deleteVideo = (videoId) => {
     console.log(`delete button clicked.  Video with Id ${videoId} will be deleted`);
-
+    // EMPTY ARRAY TO CONTAIN EXERCISE DATA
+    let exerciseVideos= [];
+    
     myDatabase.collection('exercise').doc(videoId).delete()
     .then( () => { 
       console.log('Data Deleted');
-      this.getExerciseFromDatabase();
+      
+      myDatabase.collection('exercise').get().then( (snapshot) => {
+      
+        // 
+        snapshot.docs.forEach( item => {
+          let myObject = item.data();
+          // Add unique id to my object
+          myObject.id = item.id;
+          
+          exerciseVideos = [ ...exerciseVideos,  myObject ];
+        });
+  
+        this.setState({
+          exercise: exerciseVideos
+        });
+  
+      });
+      
+    
      } )
     .catch( (e) => console.log(e, 'Data delete failed') );
   
